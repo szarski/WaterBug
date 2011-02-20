@@ -1,11 +1,12 @@
 div.main_wrapper {
-  position: absolute;
+  position: fixed;
   width: 100%;
   background-color: #FFF;
   border-top: 2px solid #000;
   padding: 0px;
   margin: 0px;
   bottom: 0px;
+  z-index: 50000;
 }
 
 span.exception {
