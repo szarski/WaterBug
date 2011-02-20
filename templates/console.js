@@ -45,7 +45,6 @@ Console = Class({
       this.command_history_index = 0;
     if (this.command_history_index > this.command_history.length)
       this.reset_command_history_index();
-    console.log(this.command_history_index);
     this.input_element.value = this.command_history[this.command_history_index] || '';
   },
 
