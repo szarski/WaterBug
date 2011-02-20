@@ -38,12 +38,12 @@ To use WaterBug you have to either:
 
         node = document.createElement('script');
         node.type = 'text/javascript';
-        node.src = 'http://github.com/szarski/WaterBug/raw/master/generated/waterbug.js';
+        node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/master/generated/waterbug.js';
         document.getElementsByTagName("head")[0].appendChild(node);
 
   You can just insert this into the url once the page is loaded:
 
-        javascript:node=document.createElement('script');node.type='text/javascript';node.src='http://github.com/szarski/WaterBug/raw/master/generated/waterbug.js';document.getElementsByTagName("head")[0].appendChild(node);alert('WaterBug loaded!');
+        javascript:node=document.createElement('script');node.type='text/javascript';node.src=document.location.protocol+'//github.com/szarski/WaterBug/raw/master/generated/waterbug.js';document.getElementsByTagName("head")[0].appendChild(node);alert('WaterBug loaded!');
 
 
 ## License
