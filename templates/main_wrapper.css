@@ -1,0 +1,27 @@
+div.main_wrapper {
+  position: absolute;
+  width: 100%;
+  background-color: #FFF;
+  border-top: 2px solid #000;
+  padding: 0px;
+  margin: 0px;
+  bottom: 0px;
+}
+
+span.exception {
+  color: #F00;
+}
+
+#console_display {
+  width: 600px;
+  border: 1px solid #000;
+  height: 200px;
+  margin: 5px;
+  overflow: scroll;
+}
+
+#console_input {
+  width: 600px;
+  border: 1px solid #000;
+  margin: 5px;
+}
