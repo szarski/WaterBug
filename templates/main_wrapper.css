@@ -1,3 +1,11 @@
+#waterbug_spacer {
+  margin: 0px;
+  padding: 0px;
+  height: 250px;
+  width: 100%;
+  border-top: 3px dotted #F00;
+}
+
 div.main_wrapper {
   position: fixed;
   width: 100%;
