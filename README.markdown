@@ -8,7 +8,7 @@ WaterBug was inspired by FireBug, the best ever debug tool. FireBug's developed 
 
 ## History
 
-First attempt can be found here: https://github.com/szarski/WaterBugOLD
+First attempt can be found [here](https://github.com/szarski/WaterBugOLD).
 
 Its three problems were:
 
@@ -20,7 +20,7 @@ The new tool shoud fix all the problems.
 
 ## Current state
 
-Currently WaterBug only has a javascript console, new modules will be added. I'd appreciate if anyone wants to contribute by building new modules.
+Currently WaterBug only has a javascript console, new modules will be added. I'd appreciate if anyone wanted to contribute by building new modules.
 
 ## Development
 
