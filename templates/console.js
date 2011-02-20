@@ -1,3 +1,7 @@
+function escapeHTML(string) {
+ return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+};
+
 Console = Class({
 
   initialize: function(input_element, output_element) {
@@ -26,9 +30,13 @@ Console = Class({
 
   format_output: function(command, result, exception){
     if (exception)
-      return "\n(" + this.command_history.length + ") <span class=\"exception\">" + result + "</span><br />";
+      return "\n(" + this.command_history.length + ") <span class=\"exception\">" + this.inspect(result) + "</span><br />";
     else
-      return "\n(" + this.command_history.length + ") " + result + "<br />";
+      return "\n(" + this.command_history.length + ") " + this.inspect(result) + "<br />";
+  },
+
+  inspect: function(string) {
+    return escapeHTML(string).replace(/\n/,'<br />');
   },
 
   previous_command: function(){

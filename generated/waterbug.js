@@ -67,6 +67,10 @@ Class = function(instance_methods, class_methods){
   return klass;
 }
 
+function escapeHTML(string) {
+ return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+};
+
 Console = Class({
 
   initialize: function(input_element, output_element) {
@@ -95,9 +99,13 @@ Console = Class({
 
   format_output: function(command, result, exception){
     if (exception)
-      return "\n(" + this.command_history.length + ") <span class=\"exception\">" + result + "</span><br />";
+      return "\n(" + this.command_history.length + ") <span class=\"exception\">" + this.inspect(result) + "</span><br />";
     else
-      return "\n(" + this.command_history.length + ") " + result + "<br />";
+      return "\n(" + this.command_history.length + ") " + this.inspect(result) + "<br />";
+  },
+
+  inspect: function(string) {
+    return escapeHTML(string).replace(/\n/,'<br />');
   },
 
   previous_command: function(){
@@ -114,7 +122,6 @@ Console = Class({
       this.command_history_index = 0;
     if (this.command_history_index > this.command_history.length)
       this.reset_command_history_index();
-    console.log(this.command_history_index);
     this.input_element.value = this.command_history[this.command_history_index] || '';
   },
 
