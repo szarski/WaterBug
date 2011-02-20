@@ -46,7 +46,10 @@
 //                                                                                            `````   
 //                                                                                                 `  
 //
-// copyright jacek@applicake.com
+// Copyright (c) 2010 Jacek Szarski
+// jacek@applicake.com
+// Released under the GPL license.
+// You can use the code for any purpose you want as long as you keep this note.
 
 Class = function(instance_methods, class_methods){
   var klass = function(){
