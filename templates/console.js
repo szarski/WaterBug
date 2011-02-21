@@ -16,9 +16,15 @@ Console = Class({
         key = ({38: 'up', 40: 'down', 13: 'enter'})[event.keyCode];
       else // FF and ?
         key = ({38: 'up', 40: 'down', 13: 'enter'})[e.keyCode];
-      console.log(key);
       return that.keypress(key);
     };
+  },
+
+  log: function(object) {
+    if (object.exception)
+      this.output_element.innerHTML += this.format_output('', object.message, 1);
+    else
+      this.output_element.innerHTML += this.format_output('', object, '');
   },
 
   run: function(command) {

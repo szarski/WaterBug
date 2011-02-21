@@ -1,6 +1,7 @@
 <%= render :template => 'note.js' %>
 <%= render :template => 'class.js' %>
 <%= render :template => 'console.js' %>
+<%= render :template => 'exception_handler.js' %>
 
 WaterBug = {
   html_string: ("<%= escape_javascript(render :template => 'main_wrapper.html') %>"),
