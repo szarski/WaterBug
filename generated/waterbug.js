@@ -290,7 +290,7 @@ WaterBug = {
     for (var index=0; index < container.childElementCount; index+=1)
       children.push(container.children[index]);
     while (children.length > 0) {
-      var child = children.pop();
+      var child = children.shift();
       console.log('pop:');
       console.log(child);
       document.body.insertBefore(child, last_element);
