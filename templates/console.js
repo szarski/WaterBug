@@ -22,7 +22,7 @@ Console = Class({
 
   log: function(object) {
     if (object.exception)
-      this.output_element.innerHTML += this.format_output('', object.message, 1);
+      this.output_element.innerHTML += this.format_output('', object.message + ' (' + object.url + ':' +object.line + ')', 1);
     else
       this.output_element.innerHTML += this.format_output('', object, '');
   },
