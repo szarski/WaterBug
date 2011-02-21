@@ -20,7 +20,6 @@ Exception = Class({
   exception: true,
 
   report: function() {
-    Exception.all.push(this);
     WaterBug.console.log(this);
     //var xhr; 
     //try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
@@ -55,14 +54,6 @@ Exception = Class({
     return 'exception[message]='+escape(this.message)
   },
 
-  log: function(){
-    console.log(this.to_s());
-  },
-
-  alert: function(){
-    alert(this.to_s());
-  },
-
   to_s: function() {
     return 'Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
   },
@@ -80,8 +71,6 @@ Exception = Class({
 
   navigator_fields: 'appCodeName appName appVersion cookieEnabled platform userAgent'.split(' '),
 
-  all: []
-
 });
 
 ExceptionHandler = {
@@ -91,7 +80,7 @@ ExceptionHandler = {
   },
 
   on_error: function(message, url, line) {
-    var exception = new Exception(message, url, line);
+    var exception = Exception(message, url, line);
     exception.report();
     return true;
   }

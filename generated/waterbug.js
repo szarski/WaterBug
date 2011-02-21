@@ -53,12 +53,20 @@
 
 Class = function(instance_methods, class_methods){
   var klass = function(){
-    var prototype = klass.prototype;
+    var prototype = {};
+    for (key in klass.prototype) {
+      prototype[key] = klass.prototype[key];
+    }
     prototype.initialize.apply(prototype, arguments);
+    klass.all.push(prototype);
+    var id = klass.all.length;
+    prototype.id = function(){return id};
     return prototype;
   }
 
   klass.prototype = instance_methods;
+
+  klass.all = [];
 
   for (key in class_methods) {
     klass[key] = class_methods[key];
@@ -182,7 +190,6 @@ Exception = Class({
   exception: true,
 
   report: function() {
-    Exception.all.push(this);
     WaterBug.console.log(this);
     //var xhr; 
     //try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
@@ -217,14 +224,6 @@ Exception = Class({
     return 'exception[message]='+escape(this.message)
   },
 
-  log: function(){
-    console.log(this.to_s());
-  },
-
-  alert: function(){
-    alert(this.to_s());
-  },
-
   to_s: function() {
     return 'Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
   },
@@ -242,8 +241,6 @@ Exception = Class({
 
   navigator_fields: 'appCodeName appName appVersion cookieEnabled platform userAgent'.split(' '),
 
-  all: []
-
 });
 
 ExceptionHandler = {
@@ -253,7 +250,7 @@ ExceptionHandler = {
   },
 
   on_error: function(message, url, line) {
-    var exception = new Exception(message, url, line);
+    var exception = Exception(message, url, line);
     exception.report();
     return true;
   }
@@ -262,14 +259,36 @@ ExceptionHandler = {
 
 ExceptionHandler.load();
 
+FakeConsole=Class({
+
+  initialize: function() {
+    this.calls = [];
+  },
+    
+  log: function() {
+    this.calls.push(arguments);
+  },
+
+  call: function(object) {
+    for (var index in this.calls) {
+      args = this.calls[index];
+      object.log.apply(object, args);
+    }
+  }
+
+},{});
+
+
 
 WaterBug = {
   html_string: ("<style type=\"text/css\">\n  #waterbug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #FFF;\n  border-top: 2px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  z-index: 50000;\n}\n\nspan.exception {\n  color: #F00;\n}\n\n#console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 5px;\n  overflow: scroll;\n}\n\n#console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 5px;\n}\n\n<\/style>\n<div class=\"main_wrapper\" id=\"main_wrapper\">\n  <div id=\"console_display\"><\/div>\n  <input id=\"console_input\" type=\"text\" />\n<\/div>\n<div id=\"waterbug_spacer\"><!-- zZz --><\/div>\n"),
-  console: null,
+  console: FakeConsole(),
   load: function() {
+    var fake_console = this.console;
     document.body.innerHTML += this.html_string;
     this.console = Console(document.getElementById('console_input'), document.getElementById('console_display'));
+    fake_console.call(this.console);
   }
 }
 
-WaterBug.load();
+setTimeout('WaterBug.load();', 1000); // this is a mockup od document.ready :)

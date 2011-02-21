@@ -63,3 +63,14 @@ Copyright (c) 2010 Jacek Szarski
 jacek@applicake.com
 
 Released under the GPL license.
+
+## ToDo
+
+  * improve Console#inspect
+
+  * improve exception logging
+
+  * unify the Exception class
+
+  * implement document.ready equivalent to load WB (waterbug.js last line)
+

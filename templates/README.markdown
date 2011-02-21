@@ -50,3 +50,7 @@ Copyright (c) 2010 Jacek Szarski
 jacek@applicake.com
 
 Released under the GPL license.
+
+## ToDo
+
+<%= render :template => "todo.markdown" %>
