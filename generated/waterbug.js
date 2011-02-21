@@ -65,13 +65,11 @@ Class = function(instance_methods, class_methods){
   }
 
   klass.prototype = instance_methods;
-
-  klass.all = [];
-
   for (key in class_methods) {
     klass[key] = class_methods[key];
   }
 
+  klass.all = [];
   return klass;
 }
 
