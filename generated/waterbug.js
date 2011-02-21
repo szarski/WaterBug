@@ -160,16 +160,16 @@ Console = Class({
 },{
 });
 
-function someserialize(obj, prefix) {
-var str = [];
-for(var p in obj) {
-var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-str.push(typeof v == "object" ? 
-someserialize(v, k) :
-encodeURIComponent(k) + "=" + encodeURIComponent(v));
-}
-return str.join("&");
-}
+//function someserialize(obj, prefix) {
+//var str = [];
+//for(var p in obj) {
+//var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+//str.push(typeof v == "object" ? 
+//someserialize(v, k) :
+//encodeURIComponent(k) + "=" + encodeURIComponent(v));
+//}
+//return str.join("&");
+//}
 
 
 Exception = Class({
