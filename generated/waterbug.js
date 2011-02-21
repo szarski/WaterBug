@@ -281,12 +281,25 @@ FakeConsole=Class({
 WaterBug = {
   html_string: ("<style type=\"text/css\">\n  #waterbug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #FFF;\n  border-top: 2px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  z-index: 50000;\n}\n\nspan.exception {\n  color: #F00;\n}\n\n#console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 5px;\n  overflow: scroll;\n}\n\n#console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 5px;\n}\n\n<\/style>\n<div class=\"main_wrapper\" id=\"main_wrapper\">\n  <div id=\"console_display\"><\/div>\n  <input id=\"console_input\" type=\"text\" />\n<\/div>\n<div id=\"waterbug_spacer\"><!-- zZz --><\/div>\n"),
   console: FakeConsole(),
-  load: function() {
-    var fake_console = this.console;
+
+  insert_body: function() {
     var container = document.createElement('div');
-    container.innerHTML += this.html_string;
+    container.innerHTML = this.html_string;
     var last_element = document.body.children[document.body.children.length - 1];
-    document.body.insertBefore(container, last_element);
+    var children=[];
+    for (var index=0; index < container.childElementCount; index+=1)
+      children.push(container.children[index]);
+    while (children.length > 0) {
+      var child = children.pop();
+      console.log('pop:');
+      console.log(child);
+      document.body.insertBefore(child, last_element);
+    }
+  },
+
+  load: function() {
+    this.insert_body();
+    var fake_console = this.console;
     this.console = Console(document.getElementById('console_input'), document.getElementById('console_display'));
     fake_console.call(this.console);
   }
