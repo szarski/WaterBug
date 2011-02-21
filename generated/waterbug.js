@@ -79,7 +79,15 @@ Console = Class({
     this.input_element = input_element;
     this.output_element = output_element;
     var that = this;
-    this.input_element.onkeypress = function(event){return that.keypress(((event.charCode === undefined)||(event.charCode == 0)) ? event.keyCode : event.charCode);};
+    this.input_element.onkeyup = function(e){
+      var key;
+      if(window.event) // IE
+        key = ({38: 'up', 40: 'down', 13: 'enter'})[event.keyCode];
+      else // FF and ?
+        key = ({38: 'up', 40: 'down', 13: 'enter'})[e.keyCode];
+      console.log(key);
+      return that.keypress(key);
+    };
   },
 
   run: function(command) {
@@ -130,13 +138,13 @@ Console = Class({
   },
 
   keypress: function(key) {
-    if (key==13) {
+    if (key=='enter') {
       this.run(this.input_element.value);
       return false
-    } else if (key==38) {
+    } else if (key=='up') {
       this.previous_command();
       return false
-    } else if (key==40) {
+    } else if (key=='down') {
       this.next_command();
       return false
     } else
