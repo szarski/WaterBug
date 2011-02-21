@@ -10,7 +10,10 @@ WaterBug = {
   console: FakeConsole(),
   load: function() {
     var fake_console = this.console;
-    document.body.innerHTML += this.html_string;
+    var container = document.createElement('div');
+    container.innerHTML += this.html_string;
+    var last_element = document.body.children[document.body.children.length - 1];
+    document.body.insertBefore(container, last_element);
     this.console = Console(document.getElementById('console_input'), document.getElementById('console_display'));
     fake_console.call(this.console);
   }
