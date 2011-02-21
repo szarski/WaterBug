@@ -17,8 +17,7 @@ def render(options={})
 end
 
 def write_file(name, content)
-  puts "writing #{name}:"
-  puts content
+  puts "  writing #{name}"
   path = File.join(File.dirname(__FILE__), 'generated', name)
   File.open(path, "w") do |file|
     file.write(content)
