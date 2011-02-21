@@ -237,7 +237,7 @@ Exception = Class({
 
 },{
 
-  navigator_fields: 'appCodeName appName appVersion cookieEnabled platform userAgent'.split(' '),
+  navigator_fields: 'appCodeName appName appVersion cookieEnabled platform userAgent'.split(' ')
 
 });
 
