@@ -1,4 +1,4 @@
-FakeConsole=Class({
+WaterBug.FakeConsole=WaterBug.Class({
 
   initialize: function() {
     this.calls = [];

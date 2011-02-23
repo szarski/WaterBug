@@ -1,4 +1,4 @@
-Class = function(instance_methods, class_methods){
+WaterBug.Class = function(instance_methods, class_methods){
   var klass = function(){
     var prototype = {};
     for (key in klass.prototype) {

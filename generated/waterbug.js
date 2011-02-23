@@ -1,3 +1,5 @@
+WaterBug = {};
+
 // ::.      ::-      ::-                                       `::::::::-`                            
 // hMh     +MMN`    -MM:             /do                       :MMyyyyyhNMy`                          
 // -MM-   `NNyMo    hMh   `-:::.    .oMh.`    .::-`     .. `-: :MN      `mMo  `..     `.`     .:-` `` 
@@ -51,7 +53,7 @@
 // Released under the GPL license.
 // You can use the code for any purpose you want as long as you keep this note.
 
-Class = function(instance_methods, class_methods){
+WaterBug.Class = function(instance_methods, class_methods){
   var klass = function(){
     var prototype = {};
     for (key in klass.prototype) {
@@ -73,11 +75,7 @@ Class = function(instance_methods, class_methods){
   return klass;
 }
 
-function escapeHTML(string) {
- return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-};
-
-Console = Class({
+WaterBug.Console = WaterBug.Class({
 
   initialize: function(input_element, output_element) {
     this.command_history = [];
@@ -125,7 +123,7 @@ Console = Class({
   },
 
   inspect: function(string) {
-    return escapeHTML(string).replace(/\n/,'<br />');
+    return WaterBug.Console.escapeHTML(string).replace(/\n/,'<br />');
   },
 
   previous_command: function(){
@@ -164,6 +162,11 @@ Console = Class({
   }
 
 },{
+
+  escapeHTML: function(string) {
+    return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  }
+
 });
 
 //function someserialize(obj, prefix) {
@@ -178,7 +181,7 @@ Console = Class({
 //}
 
 
-Exception = Class({
+WaterBug.Exception = WaterBug.Class({
   initialize: function(message, url, line) {
     this.message = message;
     this.url     = url;
@@ -217,19 +220,19 @@ Exception = Class({
   },
 
   url_encoded: function() {
-    for(var index in Exception.navigator_fields)
-      var field_name = Exception.navigator_fields[index];
+    for(var index in WaterBug.Exception.navigator_fields)
+      var field_name = WaterBug.Exception.navigator_fields[index];
     return 'exception[message]='+escape(this.message)
   },
 
   to_s: function() {
-    return 'Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
+    return 'WaterBug.Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
   },
 
   debug_info: function() {
     result = {};
-    for(var index in Exception.navigator_fields) {
-      var field_name = Exception.navigator_fields[index];
+    for(var index in WaterBug.Exception.navigator_fields) {
+      var field_name = WaterBug.Exception.navigator_fields[index];
       result[field_name] = navigator[field_name];
     }
     return result;
@@ -241,23 +244,23 @@ Exception = Class({
 
 });
 
-ExceptionHandler = {
+WaterBug.ExceptionHandler = {
 
   load: function() {
     window.onerror = this.on_error;
   },
 
   on_error: function(message, url, line) {
-    var exception = Exception(message, url, line);
+    var exception = WaterBug.Exception(message, url, line);
     exception.report();
     return true;
   }
 
 };
 
-ExceptionHandler.load();
+WaterBug.ExceptionHandler.load();
 
-FakeConsole=Class({
+WaterBug.FakeConsole=WaterBug.Class({
 
   initialize: function() {
     this.calls = [];
@@ -277,10 +280,10 @@ FakeConsole=Class({
 },{});
 
 
+WaterBug.console = WaterBug.FakeConsole();
 
-WaterBug = {
+WaterBug.Runner = {
   html_string: ("<div>\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #waterbug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #FFF;\n  border-top: 2px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  z-index: 50000;\n}\n\nspan.exception {\n  color: #F00;\n}\n\n#console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 5px;\n  overflow: scroll;\n}\n\n#console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 5px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"main_wrapper\" id=\"main_wrapper\">\n  <div id=\"console_display\"><\/div>\n  <input id=\"console_input\" type=\"text\" />\n<\/div>\n<div id=\"waterbug_spacer\"><!-- zZz --><\/div>\n"),
-  console: FakeConsole(),
 
   insert_body: function() {
     var container = document.createElement('div');
@@ -298,10 +301,10 @@ WaterBug = {
 
   load: function() {
     this.insert_body();
-    var fake_console = this.console;
-    this.console = Console(document.getElementById('console_input'), document.getElementById('console_display'));
-    fake_console.call(this.console);
+    var fake_console = WaterBug.console;
+    WaterBug.console = WaterBug.Console(document.getElementById('console_input'), document.getElementById('console_display'));
+    fake_console.call(WaterBug.console);
   }
 }
 
-setTimeout('WaterBug.load();', 1000); // this is a mockup od document.ready :)
+setTimeout('WaterBug.Runner.load();', 1000); // this is a mockup od document.ready :)

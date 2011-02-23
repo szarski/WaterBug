@@ -1,13 +1,15 @@
+WaterBug = {};
+
 <%= render :template => 'note.js' %>
 <%= render :template => 'class.js' %>
 <%= render :template => 'console.js' %>
 <%= render :template => 'exception_handler.js' %>
 <%= render :template => 'fake_console.js' %>
 
+WaterBug.console = WaterBug.FakeConsole();
 
-WaterBug = {
+WaterBug.Runner = {
   html_string: ("<%= escape_javascript(render :template => 'main_wrapper.html') %>"),
-  console: FakeConsole(),
 
   insert_body: function() {
     var container = document.createElement('div');
@@ -25,10 +27,10 @@ WaterBug = {
 
   load: function() {
     this.insert_body();
-    var fake_console = this.console;
-    this.console = Console(document.getElementById('console_input'), document.getElementById('console_display'));
-    fake_console.call(this.console);
+    var fake_console = WaterBug.console;
+    WaterBug.console = WaterBug.Console(document.getElementById('console_input'), document.getElementById('console_display'));
+    fake_console.call(WaterBug.console);
   }
 }
 
-setTimeout('WaterBug.load();', 1000); // this is a mockup od document.ready :)
+setTimeout('WaterBug.Runner.load();', 1000); // this is a mockup od document.ready :)

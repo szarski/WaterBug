@@ -10,7 +10,7 @@
 //}
 
 
-Exception = Class({
+WaterBug.Exception = WaterBug.Class({
   initialize: function(message, url, line) {
     this.message = message;
     this.url     = url;
@@ -49,19 +49,19 @@ Exception = Class({
   },
 
   url_encoded: function() {
-    for(var index in Exception.navigator_fields)
-      var field_name = Exception.navigator_fields[index];
+    for(var index in WaterBug.Exception.navigator_fields)
+      var field_name = WaterBug.Exception.navigator_fields[index];
     return 'exception[message]='+escape(this.message)
   },
 
   to_s: function() {
-    return 'Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
+    return 'WaterBug.Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
   },
 
   debug_info: function() {
     result = {};
-    for(var index in Exception.navigator_fields) {
-      var field_name = Exception.navigator_fields[index];
+    for(var index in WaterBug.Exception.navigator_fields) {
+      var field_name = WaterBug.Exception.navigator_fields[index];
       result[field_name] = navigator[field_name];
     }
     return result;
@@ -73,18 +73,18 @@ Exception = Class({
 
 });
 
-ExceptionHandler = {
+WaterBug.ExceptionHandler = {
 
   load: function() {
     window.onerror = this.on_error;
   },
 
   on_error: function(message, url, line) {
-    var exception = Exception(message, url, line);
+    var exception = WaterBug.Exception(message, url, line);
     exception.report();
     return true;
   }
 
 };
 
-ExceptionHandler.load();
+WaterBug.ExceptionHandler.load();

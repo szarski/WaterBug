@@ -1,8 +1,4 @@
-function escapeHTML(string) {
- return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-};
-
-Console = Class({
+WaterBug.Console = WaterBug.Class({
 
   initialize: function(input_element, output_element) {
     this.command_history = [];
@@ -50,7 +46,7 @@ Console = Class({
   },
 
   inspect: function(string) {
-    return escapeHTML(string).replace(/\n/,'<br />');
+    return WaterBug.Console.escapeHTML(string).replace(/\n/,'<br />');
   },
 
   previous_command: function(){
@@ -89,4 +85,9 @@ Console = Class({
   }
 
 },{
+
+  escapeHTML: function(string) {
+    return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  }
+
 });
