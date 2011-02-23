@@ -1,6 +1,10 @@
-<style type="text/css">
-  <%= render :template => 'main_wrapper.css' %>
-</style>
+<div>
+  <br />
+  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->
+  <style type="text/css">
+    <%= render :template => 'main_wrapper.css' %>
+  </style>
+</div>
 <div class="main_wrapper" id="main_wrapper">
   <div id="console_display"></div>
   <input id="console_input" type="text" />

@@ -19,8 +19,6 @@ WaterBug = {
       children.push(container.children[index]);
     while (children.length > 0) {
       var child = children.shift();
-      console.log('pop:');
-      console.log(child);
       document.body.insertBefore(child, last_element);
     }
   },
