@@ -287,7 +287,8 @@ WaterBug = {
     container.innerHTML = this.html_string;
     var last_element = document.body.children[document.body.children.length - 1];
     var children=[];
-    for (var index=0; index < container.childElementCount; index+=1)
+    var element_count = container.children.length;
+    for (var index=0; index < element_count; index+=1)
       children.push(container.children[index]);
     while (children.length > 0) {
       var child = children.shift();
