@@ -56,6 +56,8 @@ In IE6 the main container styles will be broken because it doesn't support `posi
 
 Simply run `ruby generate.rb`. The script generates files into the `generated/` directory.
 
+Please see the coding guidelines here: http://github.com/szarski/WaterBug/blob/master/coding_guidelines.markdown
+
 ## Usage
 
 The examples below explain how to use version `stable_0.03`.
