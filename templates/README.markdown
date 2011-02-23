@@ -20,13 +20,31 @@ The new tool shoud fix all the problems.
 
 ## Current state
 
-Currently WaterBug only has a javascript console, new modules will be added. I'd appreciate if anyone wanted to contribute by building new modules.
+Currently WaterBug is in an early development state. New modules will be added periodically as the previous ones become stable and satisfactionary.
+
+I'd appreciate if anyone wanted to contribute by building new modules.
+
+For details please reffer to the latest stable version.
+
+## Latest stable version
+
+Current version is <%= LATEST_STABLE %>.
+
+<% if LATEST_STABLE_DESCRIPTION %>
+<%= LATEST_STABLE_DESCRIPTION %>
+<% else %>
+(no description available for ths version)
+<% end %>
 
 ## Development
 
 Simply run `ruby generate.rb`. The script generates files into the `generated/` directory.
 
 ## Usage
+
+The examples below explain how to use version `<%= LATEST_STABLE %>`.
+
+To use other versions just replace `<%= LATEST_STABLE %>` with `<%= BRANCH %>`.
 
 To use WaterBug you have to either:
 
@@ -38,9 +56,11 @@ To use WaterBug you have to either:
 
         <%= render(:template => "loading_script.js").split("\n").join("\n        ") %>
 
-  You can just insert this into the url once the page is loaded:
+  * just insert this into the url once the page is loaded:
 
         <%= render(:template => "loading_script_urllike.js") %>
+
+Please note that only the first option will allow you to catch exceptions that appear when the page is being loaded.
 
 
 ## License

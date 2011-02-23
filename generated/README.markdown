@@ -28,7 +28,29 @@ The new tool shoud fix all the problems.
 
 ## Current state
 
-Currently WaterBug only has a javascript console, new modules will be added. I'd appreciate if anyone wanted to contribute by building new modules.
+Currently WaterBug is in an early development state. New modules will be added periodically as the previous ones become stable and satisfactionary.
+
+I'd appreciate if anyone wanted to contribute by building new modules.
+
+For details please reffer to the latest stable version.
+
+## Latest stable version
+
+Current version is stable_0.03.
+
+
+This version provides a working console and error handling. Console has minimum functionality to be usable. Css styles are also very basic.
+
+Thested with:
+
+  * IE6
+  * IE7
+  * IE8
+  * OSX Chrome
+  * OSX Firefox
+
+In IE6 the main container styles will be broken because it doesn't support `position:fixed`. The functionality is usable however.
+
 
 ## Development
 
@@ -36,24 +58,30 @@ Simply run `ruby generate.rb`. The script generates files into the `generated/` 
 
 ## Usage
 
+The examples below explain how to use version `stable_0.03`.
+
+To use other versions just replace `stable_0.03` with `master`.
+
 To use WaterBug you have to either:
 
   * include it in your website's header:
 
-        <script type="text/javascript" src="http://github.com/szarski/WaterBug/raw/master/generated/waterbug.js"></script>
+        <script type="text/javascript" src="http://github.com/szarski/WaterBug/raw/stable_0.03/generated/waterbug.js"></script>
 
 
   * dynamically ad it by issuing this code:
 
         node = document.createElement('script');
         node.type = 'text/javascript';
-        node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/master/generated/waterbug.js';
+        node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/stable_0.03/generated/waterbug.js';
         document.getElementsByTagName("head")[0].appendChild(node);
 
-  You can just insert this into the url once the page is loaded:
+  * just insert this into the url once the page is loaded:
 
-        javascript:node = document.createElement('script');node.type = 'text/javascript';node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/master/generated/waterbug.js';document.getElementsByTagName("head")[0].appendChild(node);alert('WaterBug loaded!');
+        javascript:node = document.createElement('script');node.type = 'text/javascript';node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/stable_0.03/generated/waterbug.js';document.getElementsByTagName("head")[0].appendChild(node);alert('WaterBug loaded!');
 
+
+Please note that only the first option will allow you to catch exceptions that appear when the page is being loaded.
 
 
 ## License
