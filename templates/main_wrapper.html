@@ -5,8 +5,8 @@
     <%= render :template => 'main_wrapper.css' %>
   </style>
 </div>
-<div class="main_wrapper" id="main_wrapper">
-  <div id="console_display"></div>
-  <input id="console_input" type="text" />
+<div class="<%= html_element_id(:main_wrapper) %>" id="<%= html_element_id(:main_wrapper) %>">
+  <div id="<%= html_element_id(:console_display) %>"></div>
+  <input id="<%= html_element_id(:console_input) %>" type="text" />
 </div>
-<div id="waterbug_spacer"><!-- zZz --></div>
+<div id="<%= html_element_id(:spacer) %>"><!-- zZz --></div>

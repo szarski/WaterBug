@@ -28,7 +28,7 @@ WaterBug.Runner = {
   load: function() {
     this.insert_body();
     var fake_console = WaterBug.console;
-    WaterBug.console = WaterBug.Console(document.getElementById('console_input'), document.getElementById('console_display'));
+    WaterBug.console = WaterBug.Console(document.getElementById('<%= html_element_id(:console_input) %>'), document.getElementById('<%= html_element_id(:console_display) %>'));
     fake_console.call(WaterBug.console);
   }
 }

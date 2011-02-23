@@ -283,7 +283,7 @@ WaterBug.FakeConsole=WaterBug.Class({
 WaterBug.console = WaterBug.FakeConsole();
 
 WaterBug.Runner = {
-  html_string: ("<div>\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #waterbug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #FFF;\n  border-top: 2px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  z-index: 50000;\n}\n\nspan.exception {\n  color: #F00;\n}\n\n#console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 5px;\n  overflow: scroll;\n}\n\n#console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 5px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"main_wrapper\" id=\"main_wrapper\">\n  <div id=\"console_display\"><\/div>\n  <input id=\"console_input\" type=\"text\" />\n<\/div>\n<div id=\"waterbug_spacer\"><!-- zZz --><\/div>\n"),
+  html_string: ("<div>\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #WaterBug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.WaterBug_main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #FFF;\n  border-top: 2px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  z-index: 50000;\n}\n\nspan.exception {\n  color: #F00;\n}\n\n#WaterBug_console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 5px;\n  overflow: scroll;\n}\n\n#WaterBug_console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 5px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"WaterBug_main_wrapper\" id=\"WaterBug_main_wrapper\">\n  <div id=\"WaterBug_console_display\"><\/div>\n  <input id=\"WaterBug_console_input\" type=\"text\" />\n<\/div>\n<div id=\"WaterBug_spacer\"><!-- zZz --><\/div>\n"),
 
   insert_body: function() {
     var container = document.createElement('div');
@@ -302,7 +302,7 @@ WaterBug.Runner = {
   load: function() {
     this.insert_body();
     var fake_console = WaterBug.console;
-    WaterBug.console = WaterBug.Console(document.getElementById('console_input'), document.getElementById('console_display'));
+    WaterBug.console = WaterBug.Console(document.getElementById('WaterBug_console_input'), document.getElementById('WaterBug_console_display'));
     fake_console.call(WaterBug.console);
   }
 }

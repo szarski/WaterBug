@@ -3,6 +3,10 @@ require File.join(File.dirname(__FILE__), 'config.rb')
 
 JS_ESCAPE_MAP = {"\""=>"\\\"", "\r"=>"\\n", "\\"=>"\\\\", "'"=>"\\'", "\r\n"=>"\\n", "</"=>"<\\/", "\n"=>"\\n"}
 
+def html_element_id(name)
+  "WaterBug_#{name}"
+end
+
 def render(options={})
   template_name = options.delete(:template)
   path = File.join(File.dirname(__FILE__), 'templates', template_name)
