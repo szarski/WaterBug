@@ -40,6 +40,8 @@ Current version is <%= LATEST_STABLE %>.
 
 Simply run `ruby generate.rb`. The script generates files into the `generated/` directory.
 
+Please see the coding guidelines here: http://github.com/szarski/WaterBug/blob/master/coding_guidelines.markdown
+
 ## Usage
 
 The examples below explain how to use version `<%= LATEST_STABLE %>`.
