@@ -9,11 +9,12 @@
 div.<%= html_element_id(:main_wrapper) %> {
   position: fixed;
   width: 100%;
-  background-color: #FFF;
-  border-top: 2px solid #000;
+  background-color: #DEDEDE;
+  border-top: 1px solid #000;
   padding: 0px;
   margin: 0px;
   bottom: 0px;
+  left: 0px;
   z-index: 50000;
 }
 
@@ -21,15 +22,16 @@ div.<%= html_element_id(:main_wrapper) %> {
   width: 600px;
   border: 1px solid #000;
   height: 200px;
-  margin: 5px;
+  margin: 3px;
   overflow: scroll;
   font-size: 14px;
+  background-color: #FFF;
 }
 
 #<%= html_element_id(:console_input) %> {
   width: 600px;
   border: 1px solid #000;
-  margin: 5px;
+  margin: 0px 3px 3px;
 }
 
 
