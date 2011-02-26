@@ -205,18 +205,6 @@ WaterBug.Console = WaterBug.Class({
 
 });
 
-//function someserialize(obj, prefix) {
-//var str = [];
-//for(var p in obj) {
-//var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-//str.push(typeof v == "object" ? 
-//someserialize(v, k) :
-//encodeURIComponent(k) + "=" + encodeURIComponent(v));
-//}
-//return str.join("&");
-//}
-
-
 WaterBug.Exception = WaterBug.Class({
   initialize: function(message, url, line) {
     this.message = message;
@@ -228,23 +216,6 @@ WaterBug.Exception = WaterBug.Class({
 
   report: function() {
     WaterBug.console.log(this);
-    //var xhr; 
-    //try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
-    //catch (e) 
-    //{
-    //    try {   xhr = new ActiveXObject('Microsoft.XMLHTTP');    }
-    //    catch (e2) 
-    //    {
-    //      try {  xhr = new XMLHttpRequest();     }
-    //      catch (e3) {  xhr = false;   }
-    //    }
-    //}
-    //
-    //if (xhr) {
-    //  xhr.open('post', "/javascript_exceptions",  true); 
-    //  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //  xhr.send(this.serialize()); 
-    //}
   },
 
   to_json: function() {
@@ -283,7 +254,12 @@ WaterBug.Exception = WaterBug.Class({
 WaterBug.ExceptionHandler = {
 
   load: function() {
+    this.old_onerror = window.onerror;
     window.onerror = this.on_error;
+  },
+
+  unload: function() {
+    window.onerror = this.old_onerror;
   },
 
   on_error: function(message, url, line) {
@@ -315,11 +291,24 @@ WaterBug.FakeConsole=WaterBug.Class({
 
 },{});
 
+WaterBug.Button = WaterBug.Class({
+
+  initialize: function(element, click_event) {
+    this.element = element;
+    this.click_event = click_event || function(){};
+    var that = this;
+    this.element.onclick = function(){ that.click_event.apply(that, arguments); };
+  }
+
+},{});
+
 
 WaterBug.console = WaterBug.FakeConsole();
 
 WaterBug.Runner = {
-  html_string: ("<div>\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #WaterBug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.WaterBug_main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #DEDEDE;\n  border-top: 1px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  left: 0px;\n  z-index: 50000;\n}\n\n#WaterBug_console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 3px;\n  overflow: scroll;\n  font-size: 14px;\n  background-color: #FFF;\n}\n\n#WaterBug_console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 0px 3px 3px;\n}\n\n\n#WaterBug_console_display span.WaterBug_exception {\n  color: #F00;\n}\n\n#WaterBug_console_display span.WaterBug_object_type {\n  background-color: #000000;\n  color: #FFFFFF;\n  font-size: 12px;\n  margin-right: 5px;\n  padding: 2px 5px 1px;\n}\n\n#WaterBug_console_display span.WaterBug_too_deep {\n  font-style: italic;\n  font-size: 12px;\n}\n\n#WaterBug_console_display div {\n  margin: 0px;\n  padding: 0px;\n}\n\n#WaterBug_console_display .WaterBug_line {\n  min-height: 18px;\n  border-bottom: 1px dotted #DDDDDD;\n}\n\n#WaterBug_console_display .WaterBug_line_number {\n  border: 0px;\n  background-color: #AAAAAA;\n  float: left;\n  height: 16px;\n  padding: 3px 5px 0 0;\n  text-align: right;\n  width: 50px;\n  color: #444;\n}\n\n#WaterBug_console_display .WaterBug_content {\n  border: 0px;\n  float: left;\n  min-height: 17px;\n  overflow: hidden;\n  width: 522px;\n  padding: 2px 0 0 5px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"WaterBug_main_wrapper\" id=\"WaterBug_main_wrapper\">\n  <div id=\"WaterBug_console_display\"><\/div>\n  <input id=\"WaterBug_console_input\" type=\"text\" />\n<\/div>\n<div id=\"WaterBug_spacer\"><!-- zZz --><\/div>\n"),
+  minimized: 0,
+
+  html_string: ("<div id=\"WaterBug_style_wrapper\">\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #WaterBug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.WaterBug_main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #DEDEDE;\n  border-top: 1px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  left: 0px;\n  z-index: 50000;\n}\n\n#WaterBug_console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 3px;\n  overflow: scroll;\n  font-size: 14px;\n  background-color: #FFF;\n}\n\n#WaterBug_console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 0px 3px 3px;\n}\n\n\n#WaterBug_console_display span.WaterBug_exception {\n  color: #F00;\n}\n\n#WaterBug_console_display span.WaterBug_object_type {\n  background-color: #000000;\n  color: #FFFFFF;\n  font-size: 12px;\n  margin-right: 5px;\n  padding: 2px 5px 1px;\n}\n\n#WaterBug_console_display span.WaterBug_too_deep {\n  font-style: italic;\n  font-size: 12px;\n}\n\n#WaterBug_console_display div {\n  margin: 0px;\n  padding: 0px;\n}\n\n#WaterBug_console_display .WaterBug_line {\n  min-height: 18px;\n  border-bottom: 1px dotted #DDDDDD;\n}\n\n#WaterBug_console_display .WaterBug_line_number {\n  border: 0px;\n  background-color: #AAAAAA;\n  float: left;\n  height: 16px;\n  padding: 3px 5px 0 0;\n  text-align: right;\n  width: 50px;\n  color: #444;\n}\n\n#WaterBug_console_display .WaterBug_content {\n  border: 0px;\n  float: left;\n  min-height: 17px;\n  overflow: hidden;\n  width: 522px;\n  padding: 2px 0 0 5px;\n}\n\ndiv.WaterBug_top_nav {\n  position: absolute;\n  top: 5px;\n  right: 5px;\n}\n\ndiv.WaterBug_top_nav .WaterBug_button {\n  background-color: #EEEEEE;\n  color: #555555;\n  cursor: pointer;\n  float: left;\n  font-size: 11px;\n  height: 12px;\n  margin: 0px 0px 0px 3px;\n  padding-top: 2px;\n  text-align: center;\n  width: 14px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"WaterBug_main_wrapper\" id=\"WaterBug_main_wrapper\">\n  <div id=\"WaterBug_console_display\"><\/div>\n  <input id=\"WaterBug_console_input\" type=\"text\" />\n  <div class=\"WaterBug_top_nav\">\n    <div class=\"WaterBug_button\" id=\"WaterBug_minimize_button\">_<\/div>\n    <div class=\"WaterBug_button\" id=\"WaterBug_close_button\">X<\/div>\n    <div style=\"clear:both;\"><\/div>\n  <\/div>\n<\/div>\n<div id=\"WaterBug_spacer\"><!-- zZz --><\/div>\n"),
 
   insert_body: function() {
     var container = document.createElement('div');
@@ -333,6 +322,12 @@ WaterBug.Runner = {
       var child = children.shift();
       document.body.insertBefore(child, last_element);
     }
+    this.main_wrapper = document.getElementById('WaterBug_main_wrapper');
+    this.spacer = document.getElementById('WaterBug_spacer');
+    this.style_wrapper = document.getElementById('WaterBug_style_wrapper');
+    this.main_wrapper_height = this.main_wrapper.style.height;
+    this.minimize_button = WaterBug.Button(document.getElementById('WaterBug_minimize_button'), function(){WaterBug.Runner.toggle_minimize();});
+    this.close_button = WaterBug.Button(document.getElementById('WaterBug_close_button'), function(){WaterBug.Runner.close();});
   },
 
   load: function() {
@@ -340,6 +335,26 @@ WaterBug.Runner = {
     var fake_console = WaterBug.console;
     WaterBug.console = WaterBug.Console(document.getElementById('WaterBug_console_input'), document.getElementById('WaterBug_console_display'));
     fake_console.call(WaterBug.console);
+  },
+
+  close: function() {
+    WaterBug.console.log('Bye Bye!');
+    document.body.removeChild(this.main_wrapper);
+    document.body.removeChild(this.spacer);
+    document.body.removeChild(this.style_wrapper);
+    WaterBug.ExceptionHandler.unload();
+    WaterBug = undefined;
+  },
+
+  toggle_minimize: function() {
+    if (this.minimized) {
+      this.main_wrapper.style.height = this.main_wrapper_height;
+      this.minimize_button.element.innerHTML = '_';
+    } else {
+      this.main_wrapper.style.height = '25px';
+      this.minimize_button.element.innerHTML = '+';
+    }
+    this.minimized = !this.minimized;
   }
 }
 

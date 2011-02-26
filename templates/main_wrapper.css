@@ -81,3 +81,22 @@ div.<%= html_element_id(:main_wrapper) %> {
   width: 522px;
   padding: 2px 0 0 5px;
 }
+
+div.<%= html_element_id(:top_nav) %> {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+div.<%= html_element_id(:top_nav) %> .<%= html_element_id(:button) %> {
+  background-color: #EEEEEE;
+  color: #555555;
+  cursor: pointer;
+  float: left;
+  font-size: 11px;
+  height: 12px;
+  margin: 0px 0px 0px 3px;
+  padding-top: 2px;
+  text-align: center;
+  width: 14px;
+}

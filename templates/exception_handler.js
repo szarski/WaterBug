@@ -1,15 +1,3 @@
-//function someserialize(obj, prefix) {
-//var str = [];
-//for(var p in obj) {
-//var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-//str.push(typeof v == "object" ? 
-//someserialize(v, k) :
-//encodeURIComponent(k) + "=" + encodeURIComponent(v));
-//}
-//return str.join("&");
-//}
-
-
 WaterBug.Exception = WaterBug.Class({
   initialize: function(message, url, line) {
     this.message = message;
@@ -21,23 +9,6 @@ WaterBug.Exception = WaterBug.Class({
 
   report: function() {
     WaterBug.console.log(this);
-    //var xhr; 
-    //try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
-    //catch (e) 
-    //{
-    //    try {   xhr = new ActiveXObject('Microsoft.XMLHTTP');    }
-    //    catch (e2) 
-    //    {
-    //      try {  xhr = new XMLHttpRequest();     }
-    //      catch (e3) {  xhr = false;   }
-    //    }
-    //}
-    //
-    //if (xhr) {
-    //  xhr.open('post', "/javascript_exceptions",  true); 
-    //  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //  xhr.send(this.serialize()); 
-    //}
   },
 
   to_json: function() {
@@ -76,7 +47,12 @@ WaterBug.Exception = WaterBug.Class({
 WaterBug.ExceptionHandler = {
 
   load: function() {
+    this.old_onerror = window.onerror;
     window.onerror = this.on_error;
+  },
+
+  unload: function() {
+    window.onerror = this.old_onerror;
   },
 
   on_error: function(message, url, line) {
