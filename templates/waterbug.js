@@ -62,7 +62,11 @@ WaterBug.Runner = {
   }
 }
 
-if (window.addEventListener)
-  window.addEventListener('load', function(){WaterBug.Runner.load()}, 0);
-else
-  window.attachEvent('load', function(){WaterBug.Runner.load()});
+if  (document.readyState && (/loaded|complete/.test(document.readyState))) {
+  WaterBug.Runner.load();
+} else {
+  if (window.addEventListener)
+    window.addEventListener('load', function(){WaterBug.Runner.load()}, 0);
+  else
+    window.attachEvent('load', function(){WaterBug.Runner.load()});
+}
