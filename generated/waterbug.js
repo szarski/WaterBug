@@ -95,10 +95,7 @@ WaterBug.Console = WaterBug.Class({
   },
 
   log: function(object) {
-    if (object.exception)
-      this.output_element.innerHTML += this.format_output('', object.message + ' (' + object.url + ':' +object.line + ')', 1);
-    else
-      this.output_element.innerHTML += this.format_output('', object, '');
+    this.output_element.innerHTML += this.format_output(object);
     this.output_element.scrollTop = this.output_element.scrollHeight;
   },
 
@@ -110,52 +107,56 @@ WaterBug.Console = WaterBug.Class({
     try {
       result = eval(command);
     } catch(e) {
-      result = e.message;
-      exception = e.message;
+      result = WaterBug.Exception(e.message);
     }
-    this.output_element.innerHTML += this.format_output(command, result, exception);
-    this.output_element.scrollTop = this.output_element.scrollHeight;
+    this.log(result);
     this.input_element.value = '';
   },
 
-  format_output: function(command, result, exception){
-    content = exception ? "<span class=\"WaterBug_exception\">" + result + "</span>" : this.inspect(result);
-    return '\n<div class="WaterBug_line"><div class="WaterBug_line_number">' + this.command_history.length + '</div><div class="WaterBug_content">' + content + '</div><div style="clear:both;"></div></div>';
+  format_output: function(result){
+    return '\n<div class="WaterBug_line"><div class="WaterBug_line_number">' + this.command_history.length + '</div><div class="WaterBug_content">' + this.inspect(result) + '</div><div style="clear:both;"></div></div>';
   },
 
   inspect: function(obj, level) {
     if (!level)
       level = 0;
     var representation;
-    switch (typeof obj) {
-      case 'string': 
-        representation = '"' + WaterBug.Console.escapeHTML(obj).replace(/\n/,'<br />') + '"';
-        break;
-      case 'number': 
-        representation = '' + obj;
-        break;
-      case 'boolean': 
-        representation = (obj ? 'true' : 'false');
-        break;
-      case 'undefined':
-        representation = 'undefined';
-        break;
-      case 'object':
-        if (level < 3) {
-          var values = [];
-          for (var property in obj)
-            values.push(property+': '+this.inspect(obj[property], level+1));
-          representation =  '{' + values.join(", ") + '}';
-        } else {
-          representation =  "<span class=\"WaterBug_too_deep\">(too deep...)</span>";
-        }
-        break;
-      default:
-        representation = WaterBug.Console.escapeHTML('' + obj);
-        break;
+    var type;
+    if ((obj.class) && (obj.class == WaterBug.Exception)) {
+      representation = "<span class=\"WaterBug_exception\">" + obj.short_broken_with('<br />') + "</span>";
+      type = "!";
+    } else {
+      type = typeof(obj);
+      switch (typeof obj) {
+        case 'string': 
+          representation = '"' + WaterBug.Console.escapeHTML(obj).replace(/\n/,'<br />') + '"';
+          break;
+        case 'number': 
+          representation = '' + obj;
+          break;
+        case 'boolean': 
+          representation = (obj ? 'true' : 'false');
+          break;
+        case 'undefined':
+          representation = 'undefined';
+          break;
+        case 'object':
+          if (level < 3) {
+            var values = [];
+            for (var property in obj)
+              values.push(property+': '+this.inspect(obj[property], level+1));
+            representation =  '{' + values.join(", ") + '}';
+          } else {
+            representation =  "<span class=\"WaterBug_too_deep\">(too deep...)</span>";
+          }
+          break;
+        default:
+          representation = WaterBug.Console.escapeHTML('' + obj);
+          break;
+      }
     }
     if (level == 0)
-      return '<span class="WaterBug_object_type">'+ typeof(obj) +'</span>' + representation;
+      return '<span class="WaterBug_object_type">'+ type +'</span>' + representation;
     else
       return representation;
   },
@@ -235,6 +236,13 @@ WaterBug.Exception = WaterBug.Class({
 
   to_s: function() {
     return 'WaterBug.Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
+  },
+
+  short_broken_with: function(separator) {
+    var result = this.message;
+    if (this.line)
+      result += separator + this.url + ':' + this.line;    
+    return result;
   },
 
   debug_info: function() {

@@ -29,6 +29,13 @@ WaterBug.Exception = WaterBug.Class({
     return 'WaterBug.Exception: '+this.message+'\n\ncaught in: '+this.url+'\nline: '+this.line;
   },
 
+  short_broken_with: function(separator) {
+    var result = this.message;
+    if (this.line)
+      result += separator + this.url + ':' + this.line;    
+    return result;
+  },
+
   debug_info: function() {
     result = {};
     for(var index in WaterBug.Exception.navigator_fields) {
