@@ -82,6 +82,11 @@ div.<%= html_element_id(:main_wrapper) %> {
   padding: 2px 0 0 5px;
 }
 
+#<%= html_element_id(:console_display) %> .<%= html_element_id(:command) %> {
+  color: #07F;
+  margin-bottom: 5px;
+}
+
 div.<%= html_element_id(:top_nav) %> {
   position: absolute;
   top: 5px;

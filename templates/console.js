@@ -16,11 +16,6 @@ WaterBug.Console = WaterBug.Class({
     };
   },
 
-  log: function(object) {
-    this.output_element.innerHTML += this.format_output(object);
-    this.output_element.scrollTop = this.output_element.scrollHeight;
-  },
-
   run: function(command) {
     var result;
     var exception = 0;
@@ -31,12 +26,17 @@ WaterBug.Console = WaterBug.Class({
     } catch(e) {
       result = WaterBug.Exception(e.message);
     }
-    this.log(result);
+    this.log(result, command);
     this.input_element.value = '';
   },
 
-  format_output: function(result){
-    return '\n<div class="<%= html_element_id(:line) %>"><div class="<%= html_element_id(:line_number) %>">' + this.command_history.length + '</div><div class="<%= html_element_id(:content) %>">' + this.inspect(result) + '</div><div style="clear:both;"></div></div>';
+  log: function(object, command) {
+    var command_output = command ? '<div class="<%= html_element_id(:command) %>">'+WaterBug.Console.escapeHTML('' + command)+'</div>' : '';
+
+    var output = '\n<div class="<%= html_element_id(:line) %>"><div class="<%= html_element_id(:line_number) %>">' + this.command_history.length + '</div><div class="<%= html_element_id(:content) %>">' + command_output + this.inspect(object) + '</div><div style="clear:both;"></div></div>';
+
+    this.output_element.innerHTML += output;
+    this.output_element.scrollTop = this.output_element.scrollHeight;
   },
 
   inspect: function(obj, level) {
@@ -44,7 +44,7 @@ WaterBug.Console = WaterBug.Class({
       level = 0;
     var representation;
     var type;
-    if ((obj.class) && (obj.class == WaterBug.Exception)) {
+    if (obj && (obj.class) && (obj.class == WaterBug.Exception)) {
       representation = "<span class=\"<%= html_element_id(:exception) %>\">" + obj.short_broken_with('<br />') + "</span>";
       type = "!";
     } else {

@@ -94,11 +94,6 @@ WaterBug.Console = WaterBug.Class({
     };
   },
 
-  log: function(object) {
-    this.output_element.innerHTML += this.format_output(object);
-    this.output_element.scrollTop = this.output_element.scrollHeight;
-  },
-
   run: function(command) {
     var result;
     var exception = 0;
@@ -109,12 +104,17 @@ WaterBug.Console = WaterBug.Class({
     } catch(e) {
       result = WaterBug.Exception(e.message);
     }
-    this.log(result);
+    this.log(result, command);
     this.input_element.value = '';
   },
 
-  format_output: function(result){
-    return '\n<div class="WaterBug_line"><div class="WaterBug_line_number">' + this.command_history.length + '</div><div class="WaterBug_content">' + this.inspect(result) + '</div><div style="clear:both;"></div></div>';
+  log: function(object, command) {
+    var command_output = command ? '<div class="WaterBug_command">'+WaterBug.Console.escapeHTML('' + command)+'</div>' : '';
+
+    var output = '\n<div class="WaterBug_line"><div class="WaterBug_line_number">' + this.command_history.length + '</div><div class="WaterBug_content">' + command_output + this.inspect(object) + '</div><div style="clear:both;"></div></div>';
+
+    this.output_element.innerHTML += output;
+    this.output_element.scrollTop = this.output_element.scrollHeight;
   },
 
   inspect: function(obj, level) {
@@ -122,7 +122,7 @@ WaterBug.Console = WaterBug.Class({
       level = 0;
     var representation;
     var type;
-    if ((obj.class) && (obj.class == WaterBug.Exception)) {
+    if (obj && (obj.class) && (obj.class == WaterBug.Exception)) {
       representation = "<span class=\"WaterBug_exception\">" + obj.short_broken_with('<br />') + "</span>";
       type = "!";
     } else {
@@ -317,7 +317,7 @@ WaterBug.console = WaterBug.FakeConsole();
 WaterBug.Runner = {
   minimized: 0,
 
-  html_string: ("<div id=\"WaterBug_style_wrapper\">\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #WaterBug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.WaterBug_main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #DEDEDE;\n  border-top: 1px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  left: 0px;\n  z-index: 50000;\n}\n\n#WaterBug_console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 3px;\n  overflow: scroll;\n  font-size: 14px;\n  background-color: #FFF;\n}\n\n#WaterBug_console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 0px 3px 3px;\n}\n\n\n#WaterBug_console_display span.WaterBug_exception {\n  color: #F00;\n}\n\n#WaterBug_console_display span.WaterBug_object_type {\n  background-color: #000000;\n  color: #FFFFFF;\n  font-size: 12px;\n  margin-right: 5px;\n  padding: 2px 5px 1px;\n}\n\n#WaterBug_console_display span.WaterBug_too_deep {\n  font-style: italic;\n  font-size: 12px;\n}\n\n#WaterBug_console_display div {\n  margin: 0px;\n  padding: 0px;\n}\n\n#WaterBug_console_display .WaterBug_line {\n  min-height: 18px;\n  border-bottom: 1px dotted #DDDDDD;\n}\n\n#WaterBug_console_display .WaterBug_line_number {\n  border: 0px;\n  background-color: #AAAAAA;\n  float: left;\n  height: 16px;\n  padding: 3px 5px 0 0;\n  text-align: right;\n  width: 50px;\n  color: #444;\n}\n\n#WaterBug_console_display .WaterBug_content {\n  border: 0px;\n  float: left;\n  min-height: 17px;\n  overflow: hidden;\n  width: 522px;\n  padding: 2px 0 0 5px;\n}\n\ndiv.WaterBug_top_nav {\n  position: absolute;\n  top: 5px;\n  right: 5px;\n}\n\ndiv.WaterBug_top_nav .WaterBug_button {\n  background-color: #EEEEEE;\n  color: #555555;\n  cursor: pointer;\n  float: left;\n  font-size: 11px;\n  height: 12px;\n  margin: 0px 0px 0px 3px;\n  padding-top: 2px;\n  text-align: center;\n  width: 14px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"WaterBug_main_wrapper\" id=\"WaterBug_main_wrapper\">\n  <div id=\"WaterBug_console_display\"><\/div>\n  <input id=\"WaterBug_console_input\" type=\"text\" />\n  <div class=\"WaterBug_top_nav\">\n    <div class=\"WaterBug_button\" id=\"WaterBug_minimize_button\">_<\/div>\n    <div class=\"WaterBug_button\" id=\"WaterBug_close_button\">X<\/div>\n    <div style=\"clear:both;\"><\/div>\n  <\/div>\n<\/div>\n<div id=\"WaterBug_spacer\"><!-- zZz --><\/div>\n"),
+  html_string: ("<div id=\"WaterBug_style_wrapper\">\n  <br />\n  <!-- both this DIV and this BR are necesary here for IE7 to dynamicaly load css style element. -->\n  <style type=\"text/css\">\n    #WaterBug_spacer {\n  margin: 0px;\n  padding: 0px;\n  height: 250px;\n  width: 100%;\n  border-top: 3px dotted #F00;\n}\n\ndiv.WaterBug_main_wrapper {\n  position: fixed;\n  width: 100%;\n  background-color: #DEDEDE;\n  border-top: 1px solid #000;\n  padding: 0px;\n  margin: 0px;\n  bottom: 0px;\n  left: 0px;\n  z-index: 50000;\n}\n\n#WaterBug_console_display {\n  width: 600px;\n  border: 1px solid #000;\n  height: 200px;\n  margin: 3px;\n  overflow: scroll;\n  font-size: 14px;\n  background-color: #FFF;\n}\n\n#WaterBug_console_input {\n  width: 600px;\n  border: 1px solid #000;\n  margin: 0px 3px 3px;\n}\n\n\n#WaterBug_console_display span.WaterBug_exception {\n  color: #F00;\n}\n\n#WaterBug_console_display span.WaterBug_object_type {\n  background-color: #000000;\n  color: #FFFFFF;\n  font-size: 12px;\n  margin-right: 5px;\n  padding: 2px 5px 1px;\n}\n\n#WaterBug_console_display span.WaterBug_too_deep {\n  font-style: italic;\n  font-size: 12px;\n}\n\n#WaterBug_console_display div {\n  margin: 0px;\n  padding: 0px;\n}\n\n#WaterBug_console_display .WaterBug_line {\n  min-height: 18px;\n  border-bottom: 1px dotted #DDDDDD;\n}\n\n#WaterBug_console_display .WaterBug_line_number {\n  border: 0px;\n  background-color: #AAAAAA;\n  float: left;\n  height: 16px;\n  padding: 3px 5px 0 0;\n  text-align: right;\n  width: 50px;\n  color: #444;\n}\n\n#WaterBug_console_display .WaterBug_content {\n  border: 0px;\n  float: left;\n  min-height: 17px;\n  overflow: hidden;\n  width: 522px;\n  padding: 2px 0 0 5px;\n}\n\n#WaterBug_console_display .WaterBug_command {\n  color: #07F;\n  margin-bottom: 5px;\n}\n\ndiv.WaterBug_top_nav {\n  position: absolute;\n  top: 5px;\n  right: 5px;\n}\n\ndiv.WaterBug_top_nav .WaterBug_button {\n  background-color: #EEEEEE;\n  color: #555555;\n  cursor: pointer;\n  float: left;\n  font-size: 11px;\n  height: 12px;\n  margin: 0px 0px 0px 3px;\n  padding-top: 2px;\n  text-align: center;\n  width: 14px;\n}\n\n  <\/style>\n<\/div>\n<div class=\"WaterBug_main_wrapper\" id=\"WaterBug_main_wrapper\">\n  <div id=\"WaterBug_console_display\"><\/div>\n  <input id=\"WaterBug_console_input\" type=\"text\" />\n  <div class=\"WaterBug_top_nav\">\n    <div class=\"WaterBug_button\" id=\"WaterBug_minimize_button\">_<\/div>\n    <div class=\"WaterBug_button\" id=\"WaterBug_close_button\">X<\/div>\n    <div style=\"clear:both;\"><\/div>\n  <\/div>\n<\/div>\n<div id=\"WaterBug_spacer\"><!-- zZz --><\/div>\n"),
 
   insert_body: function() {
     var container = document.createElement('div');
