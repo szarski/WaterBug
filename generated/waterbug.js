@@ -367,4 +367,7 @@ WaterBug.Runner = {
   }
 }
 
-setTimeout('WaterBug.Runner.load();', 1000); // this is a mockup od document.ready :)
+if (window.addEventListener)
+  window.addEventListener('load', function(){WaterBug.Runner.load()}, 0);
+else
+  window.attachEvent('load', function(){WaterBug.Runner.load()});
