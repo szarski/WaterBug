@@ -8,7 +8,7 @@ WaterBug.Class = function(instance_methods, class_methods){
     klass.all.push(prototype);
     var id = klass.all.length;
     prototype.id = id;
-    prototype.class = klass;
+    prototype['class'] = klass;
     return prototype;
   };
 

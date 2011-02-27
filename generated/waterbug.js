@@ -56,7 +56,7 @@ try {
   WaterBug = {};
 
   try {
-eval("WaterBug.Class = function(instance_methods, class_methods){\n  var klass = function(){\n    var prototype = {};\n    for (key in klass.prototype) {\n      prototype[key] = klass.prototype[key];\n    }\n    prototype.initialize.apply(prototype, arguments);\n    klass.all.push(prototype);\n    var id = klass.all.length;\n    prototype.id = id;\n    prototype.class = klass;\n    return prototype;\n  };\n\n  klass.prototype = instance_methods;\n  for (key in class_methods) {\n    klass[key] = class_methods[key];\n  };\n\n  klass.all = [];\n  return klass;\n}\n");
+eval("WaterBug.Class = function(instance_methods, class_methods){\n  var klass = function(){\n    var prototype = {};\n    for (key in klass.prototype) {\n      prototype[key] = klass.prototype[key];\n    }\n    prototype.initialize.apply(prototype, arguments);\n    klass.all.push(prototype);\n    var id = klass.all.length;\n    prototype.id = id;\n    prototype[\'class\'] = klass;\n    return prototype;\n  };\n\n  klass.prototype = instance_methods;\n  for (key in class_methods) {\n    klass[key] = class_methods[key];\n  };\n\n  klass.all = [];\n  return klass;\n}\n");
 } catch(e) {alert('WaterBug caught an internal exception in its own body:\n"'+e.message+'"\ntemplate file class.js')};
   try {
 eval("WaterBug.FakeConsole=WaterBug.Class({\n\n  initialize: function() {\n    this.calls = [];\n  },\n    \n  log: function() {\n    this.calls.push(arguments);\n  },\n\n  call: function(object) {\n    for (var index in this.calls) {\n      args = this.calls[index];\n      object.log.apply(object, args);\n    }\n  }\n\n},{});\n");
