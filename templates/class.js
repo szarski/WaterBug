@@ -10,12 +10,12 @@ WaterBug.Class = function(instance_methods, class_methods){
     prototype.id = id;
     prototype.class = klass;
     return prototype;
-  }
+  };
 
   klass.prototype = instance_methods;
   for (key in class_methods) {
     klass[key] = class_methods[key];
-  }
+  };
 
   klass.all = [];
   return klass;
