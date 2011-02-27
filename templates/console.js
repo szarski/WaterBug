@@ -44,7 +44,7 @@ WaterBug.Console = WaterBug.Class({
       level = 0;
     var representation;
     var type;
-    if (obj && (obj.class) && (obj.class == WaterBug.Exception)) {
+    if (obj && (obj['class']) && (obj['class'] == WaterBug.Exception)) {
       representation = "<span class=\"<%= html_element_id(:exception) %>\">" + obj.short_broken_with('<br />') + "</span>";
       type = "!";
     } else {
