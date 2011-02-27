@@ -32,6 +32,7 @@ div.<%= html_element_id(:main_wrapper) %> {
   width: 600px;
   border: 1px solid #000;
   margin: 0px 3px 3px;
+  height: 20px;
 }
 
 
