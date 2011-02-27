@@ -7,7 +7,12 @@ def html_element_id(name)
   "WaterBug_#{name}"
 end
 
-def render(options={})
+class RenderResult < String
+  attr_accessor :filename
+end
+
+
+def render(options={}, set_binding=nil)
   template_name = options.delete(:template)
   path = File.join(File.dirname(__FILE__), 'templates', template_name)
   template_content = []
@@ -16,8 +21,15 @@ def render(options={})
       template_content << file.gets
     end
   end
-  result =  ERB.new(template_content.join).result(binding)
+  result =  ERB.new(template_content.join).result(set_binding || binding)
+  result = RenderResult.new(result)
+  result.filename = template_name;
   return result
+end
+
+def render_eval_and_rescue(*args)
+  result = render(*(args + [binding]))
+  return "try {\neval(\"#{ escape_javascript(result) }\");\n} catch(e) {alert('WaterBug caught an internal exception in its own body:\\n\"'+e.message+'\"\\ntemplate file #{result.filename}')};"
 end
 
 def write_file(name, content)

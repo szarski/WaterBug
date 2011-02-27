@@ -1,15 +1,16 @@
+<%= render :template => 'note.js' %>
+
 try {
   WaterBug = {};
 
-  <%= render :template => 'note.js' %>
-  <%= render :template => 'class.js' %>
-  <%= render :template => 'fake_console.js' %>
+  <%= render_eval_and_rescue :template => 'class.js' %>
+  <%= render_eval_and_rescue :template => 'fake_console.js' %>
 
   WaterBug.console = WaterBug.FakeConsole();
 
-  <%= render :template => 'runner.js' %>
-  <%= render :template => 'console.js' %>
-  <%= render :template => 'exception_handler.js' %>
+  <%= render_eval_and_rescue :template => 'runner.js' %>
+  <%= render_eval_and_rescue :template => 'console.js' %>
+  <%= render_eval_and_rescue :template => 'exception_handler.js' %>
 
   try {
     // These are dependencies that aren't necesarry for WB to load.
