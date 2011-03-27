@@ -27,6 +27,7 @@ WaterBug.Runner = {
       else
         WaterBug.console.set_singleline_mode();
     });
+    this.input_switch_button = WaterBug.Button(document.getElementById('<%= html_element_id(:run_button) %>'), function(){WaterBug.console.run();});
   },
 
   load: function() {

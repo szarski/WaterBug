@@ -28,11 +28,18 @@ div.<%= html_element_id(:main_wrapper) %> {
   background-color: #FFF;
 }
 
-#<%= html_element_id(:console_input) %> {
+.<%= html_element_id(:console_input_singleline) %> {
   width: 600px;
   border: 1px solid #000;
   margin: 0px 3px 3px;
   height: 20px;
+}
+
+.<%= html_element_id(:console_input_multiline) %> {
+  width: 600px;
+  border: 1px solid #000;
+  margin: 0px 3px 3px;
+  height: 100px;
 }
 
 

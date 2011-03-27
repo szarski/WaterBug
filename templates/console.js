@@ -10,19 +10,19 @@ WaterBug.Console = WaterBug.Class({
   },
 
   set_singleline_mode: function() {
+    this.singleline_mode = 1;
+    this.multiline_mode = 0;
     this.reconnect_input_element(this.input_element_singleline);
     this.input_element_singleline.style.display='block';
     this.input_element_multiline.style.display='none';
-    this.singleline_mode = 1;
-    this.multiline_mode = 0;
   },
 
   set_multiline_mode: function() {
+    this.singleline_mode = 0;
+    this.multiline_mode = 1;
     this.reconnect_input_element(this.input_element_multiline);
     this.input_element_singleline.style.display='none';
     this.input_element_multiline.style.display='block';
-    this.singleline_mode = 0;
-    this.multiline_mode = 1;
   },
 
   reconnect_input_element: function(element){
@@ -37,21 +37,24 @@ WaterBug.Console = WaterBug.Class({
     }
   },
 
-  connect_input_element: function(element, is_textarea) {
-                           alert(element);
+  connect_input_element: function(element) {
     this.input_element = element;
     var that = this;
-    this.input_element.onkeyup = function(e){
-      var key;
-      if(window.event) // IE
-        key = ({38: 'up', 40: 'down', 13: 'enter'})[event.keyCode];
-      else // FF and ?
-        key = ({38: 'up', 40: 'down', 13: 'enter'})[e.keyCode];
-      return that.keypress(key);
-    };
+    if (this.singleline_mode) {
+      this.input_element.onkeyup = function(e){
+        var key;
+        if(window.event) // IE
+          key = ({38: 'up', 40: 'down', 13: 'enter'})[event.keyCode];
+        else // FF and ?
+          key = ({38: 'up', 40: 'down', 13: 'enter'})[e.keyCode];
+        return that.keypress(key);
+      };
+    }
   },
 
   run: function(command) {
+    if (!command)
+      command = this.input_element.value;
     var result;
     var exception = 0;
     this.command_history.push(command);
@@ -62,7 +65,8 @@ WaterBug.Console = WaterBug.Class({
       result = WaterBug.Exception(e.message);
     }
     this.log(result, command);
-    this.input_element.value = '';
+    if (this.singleline_mode)
+      this.input_element.value = '';
   },
 
   log: function(object, command) {
