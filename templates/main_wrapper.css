@@ -42,6 +42,15 @@ div.<%= html_element_id(:main_wrapper) %> {
   height: 100px;
 }
 
+.<%= html_element_id(:long_button) %> {
+  background-color: #AAAAAA;
+  cursor: pointer;
+  float: left;
+  font-size: 12px;
+  margin: 1px 3px 2px 3px;
+  text-align: center;
+  width: 50px;
+}
 
 #<%= html_element_id(:console_display) %> span.<%= html_element_id(:exception) %> {
   color: #F00;

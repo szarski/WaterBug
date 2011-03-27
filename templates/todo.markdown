@@ -1,1 +1,1 @@
-  * make console input switch between an input and a textarea element
+  * test and debug in IE and Chrome
