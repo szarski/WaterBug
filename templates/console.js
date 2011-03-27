@@ -31,7 +31,7 @@ WaterBug.Console = WaterBug.Class({
   },
 
   log: function(object, command) {
-    var command_output = command ? '<div class="<%= html_element_id(:command) %>">'+WaterBug.Console.escapeHTML('' + command)+'</div>' : '';
+    var command_output = command ? '<div class="<%= html_element_id(:command) %>">'+WaterBug.Inspector.escapeHTML('' + command)+'</div>' : '';
 
     var output = '\n<div class="<%= html_element_id(:line) %>"><div class="<%= html_element_id(:line_number) %>">' + this.command_history.length + '</div><div class="<%= html_element_id(:content) %>">' + command_output + this.inspect(object) + '</div><div style="clear:both;"></div></div>';
 
@@ -39,48 +39,9 @@ WaterBug.Console = WaterBug.Class({
     this.output_element.scrollTop = this.output_element.scrollHeight;
   },
 
-  inspect: function(obj, level) {
-    if (!level)
-      level = 0;
-    var representation;
-    var type;
-    if (obj && (obj['class']) && (obj['class'] == WaterBug.Exception)) {
-      representation = "<span class=\"<%= html_element_id(:exception) %>\">" + obj.short_broken_with('<br />') + "</span>";
-      type = "!";
-    } else {
-      type = typeof(obj);
-      switch (typeof obj) {
-        case 'string': 
-          representation = '"' + WaterBug.Console.escapeHTML(obj).replace(/\n/,'<br />') + '"';
-          break;
-        case 'number': 
-          representation = '' + obj;
-          break;
-        case 'boolean': 
-          representation = (obj ? 'true' : 'false');
-          break;
-        case 'undefined':
-          representation = 'undefined';
-          break;
-        case 'object':
-          if (level < 3) {
-            var values = [];
-            for (var property in obj)
-              values.push(property+': '+this.inspect(obj[property], level+1));
-            representation =  '{' + values.join(", ") + '}';
-          } else {
-            representation =  "<span class=\"<%= html_element_id(:too_deep) %>\">(too deep...)</span>";
-          }
-          break;
-        default:
-          representation = WaterBug.Console.escapeHTML('' + obj);
-          break;
-      }
-    }
-    if (level == 0)
-      return '<span class="<%= html_element_id(:object_type) %>">'+ type +'</span>' + representation;
-    else
-      return representation;
+  inspect: function(obj) {
+    // should return HTML code
+    return WaterBug.Inspector(obj).html();
   },
 
   object_to_string: function(obj) {
@@ -120,11 +81,4 @@ WaterBug.Console = WaterBug.Class({
     } else
       return true;
   }
-
-},{
-
-  escapeHTML: function(string) {
-    return (''+string).replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-  }
-
 });

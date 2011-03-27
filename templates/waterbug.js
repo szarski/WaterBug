@@ -9,6 +9,7 @@ try {
   WaterBug.console = WaterBug.FakeConsole();
 
   <%= render_eval_and_rescue :template => 'runner.js' %>
+  <%= render_eval_and_rescue :template => 'inspector.js' %>
   <%= render_eval_and_rescue :template => 'console.js' %>
   <%= render_eval_and_rescue :template => 'exception_handler.js' %>
 
