@@ -1,10 +1,45 @@
 WaterBug.Console = WaterBug.Class({
 
-  initialize: function(input_element, output_element) {
+  initialize: function(singleline_input_element, multiline_input_element, output_element) {
     this.command_history = [];
     this.command_history_index = 0;
-    this.input_element = input_element;
     this.output_element = output_element;
+    this.input_element_singleline = singleline_input_element;
+    this.input_element_multiline = multiline_input_element;
+    this.set_singleline_mode();
+  },
+
+  set_singleline_mode: function() {
+    this.reconnect_input_element(this.input_element_singleline);
+    this.input_element_singleline.style.display='block';
+    this.input_element_multiline.style.display='none';
+    this.singleline_mode = 1;
+    this.multiline_mode = 0;
+  },
+
+  set_multiline_mode: function() {
+    this.reconnect_input_element(this.input_element_multiline);
+    this.input_element_singleline.style.display='none';
+    this.input_element_multiline.style.display='block';
+    this.singleline_mode = 0;
+    this.multiline_mode = 1;
+  },
+
+  reconnect_input_element: function(element){
+    this.disconnect_input_element();
+    this.connect_input_element(element);
+  },
+
+  disconnect_input_element: function() {
+    if (this.input_element) {
+      this.input_element.onkeyup = null;
+      this.input_element = null;
+    }
+  },
+
+  connect_input_element: function(element, is_textarea) {
+                           alert(element);
+    this.input_element = element;
     var that = this;
     this.input_element.onkeyup = function(e){
       var key;

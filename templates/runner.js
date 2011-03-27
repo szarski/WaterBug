@@ -21,12 +21,18 @@ WaterBug.Runner = {
     this.main_wrapper_height = this.main_wrapper.style.height;
     this.minimize_button = WaterBug.Button(document.getElementById('<%= html_element_id(:minimize_button) %>'), function(){WaterBug.Runner.toggle_minimize();});
     this.close_button = WaterBug.Button(document.getElementById('<%= html_element_id(:close_button) %>'), function(){WaterBug.Runner.close();});
+    this.input_switch_button = WaterBug.Button(document.getElementById('<%= html_element_id(:input_switch_button) %>'), function(){
+      if (WaterBug.console.singleline_mode)
+        WaterBug.console.set_multiline_mode();
+      else
+        WaterBug.console.set_singleline_mode();
+    });
   },
 
   load: function() {
     this.insert_body();
     var fake_console = WaterBug.console;
-    WaterBug.console = WaterBug.Console(document.getElementById('<%= html_element_id(:console_input) %>'), document.getElementById('<%= html_element_id(:console_display) %>'));
+    WaterBug.console = WaterBug.Console(document.getElementById('<%= html_element_id(:console_input) %>'), document.getElementById('<%= html_element_id(:console_textarea) %>'), document.getElementById('<%= html_element_id(:console_display) %>'));
     fake_console.call(WaterBug.console);
   },
 
