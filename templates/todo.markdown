@@ -1,1 +1,1 @@
-  * test and debug in IE and Chrome
+  * improve IE6 css related to positioning elements

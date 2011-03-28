@@ -36,10 +36,10 @@ For details please reffer to the latest stable version.
 
 ## Latest stable version
 
-Current version is stable_0.03.
+Current version is stable_1.00.
 
 
-This version provides a working console and error handling. Console has minimum functionality to be usable. Css styles are also very basic.
+This version provides a fully functional javascript console and error handling.
 
 Thested with:
 
@@ -60,27 +60,27 @@ Please see the coding guidelines [here](http://github.com/szarski/WaterBug/blob/
 
 ## Usage
 
-The examples below explain how to use version `stable_0.03`.
+The examples below explain how to use version `stable_1.00`.
 
-To use other versions just replace `stable_0.03` with `master`.
+To use other versions just replace `stable_1.00` with the branch or tag you want to use.
 
 To use WaterBug you have to either:
 
   * include it in your website's header:
 
-        <script type="text/javascript" src="http://github.com/szarski/WaterBug/raw/stable_0.03/generated/waterbug.js"></script>
+        <script type="text/javascript" src="http://github.com/szarski/WaterBug/raw/stable_1.00/generated/waterbug.js"></script>
 
 
   * dynamically ad it by issuing this code:
 
         node = document.createElement('script');
         node.type = 'text/javascript';
-        node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/stable_0.03/generated/waterbug.js';
+        node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/stable_1.00/generated/waterbug.js';
         document.getElementsByTagName("head")[0].appendChild(node);
 
   * just insert this into the url once the page is loaded:
 
-        javascript:node = document.createElement('script');node.type = 'text/javascript';node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/stable_0.03/generated/waterbug.js';document.getElementsByTagName("head")[0].appendChild(node);alert('WaterBug loaded!');
+        javascript:node = document.createElement('script');node.type = 'text/javascript';node.src = document.location.protocol+'//github.com/szarski/WaterBug/raw/stable_1.00/generated/waterbug.js';document.getElementsByTagName("head")[0].appendChild(node);alert('WaterBug loaded!');
 
 
 Please note that only the first option will allow you to catch exceptions that appear when the page is being loaded.
@@ -96,5 +96,5 @@ Released under the GPL license.
 
 ## ToDo
 
-  * test and debug in IE and Chrome
+  * improve IE6 css related to positioning elements
 

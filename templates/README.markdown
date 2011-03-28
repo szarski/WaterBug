@@ -46,7 +46,7 @@ Please see the coding guidelines [here](http://github.com/szarski/WaterBug/blob/
 
 The examples below explain how to use version `<%= LATEST_STABLE %>`.
 
-To use other versions just replace `<%= LATEST_STABLE %>` with `<%= BRANCH %>`.
+To use other versions just replace `<%= LATEST_STABLE %>` with the branch or tag you want to use.
 
 To use WaterBug you have to either:
 
