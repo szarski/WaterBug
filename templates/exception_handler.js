@@ -63,6 +63,7 @@ WaterBug.ExceptionHandler = {
   },
 
   on_error: function(message, url, line) {
+              debugger;
     var exception = WaterBug.Exception(message, url, line);
     exception.report();
     return true;

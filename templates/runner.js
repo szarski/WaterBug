@@ -35,6 +35,12 @@ WaterBug.Runner = {
     var fake_console = WaterBug.console;
     WaterBug.console = WaterBug.Console(document.getElementById('<%= html_element_id(:console_input) %>'), document.getElementById('<%= html_element_id(:console_textarea) %>'), document.getElementById('<%= html_element_id(:console_display) %>'));
     fake_console.call(WaterBug.console);
+
+
+
+  <%= render_eval_and_rescue :template => 'debugger.js' %>
+
+
   },
 
   close: function() {

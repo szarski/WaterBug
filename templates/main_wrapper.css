@@ -122,3 +122,9 @@ div.<%= html_element_id(:top_nav) %> .<%= html_element_id(:button) %> {
   text-align: center;
   width: 14px;
 }
+
+div.<%= html_element_id(:left_aligned) %> {
+  float: left;
+  width: 650px;
+  border: 1px solid #f00;
+}

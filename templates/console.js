@@ -60,13 +60,17 @@ WaterBug.Console = WaterBug.Class({
     this.command_history.push(command);
     this.reset_command_history_index();
     try {
-      result = eval(command);
+      result = this.execute(command);
     } catch(e) {
       result = WaterBug.Exception(e.message);
     }
     this.log(result, command);
     if (this.singleline_mode)
       this.input_element.value = '';
+  },
+
+  execute: function(command) {
+    return eval(command);
   },
 
   log: function(object, command) {

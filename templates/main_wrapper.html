@@ -6,16 +6,25 @@
   </style>
 </div>
 <div class="<%= html_element_id(:main_wrapper) %>" id="<%= html_element_id(:main_wrapper) %>">
-  <div id="<%= html_element_id(:console_display) %>"></div>
-  <input type="text" id="<%= html_element_id(:console_input) %>" class="<%= html_element_id(:console_input_singleline) %>" />
-  <textarea id="<%= html_element_id(:console_textarea) %>" class="<%= html_element_id(:console_input_multiline) %>"></textarea>
-  <div class="<%= html_element_id(:button) %> <%= html_element_id(:long_button) %>" id="<%= html_element_id(:run_button) %>">run</div>
-  <div class="<%= html_element_id(:button) %> <%= html_element_id(:long_button) %>" id="<%= html_element_id(:input_switch_button) %>">&gt;</div>
-  <div style="clear:both;"></div>
-  <div class="<%= html_element_id(:top_nav) %>">
-    <div class="<%= html_element_id(:button) %>" id="<%= html_element_id(:minimize_button) %>">_</div>
-    <div class="<%= html_element_id(:button) %>" id="<%= html_element_id(:close_button) %>">X</div>
+  <div class="<%= html_element_id(:left_aligned) %>">
+    <div id="<%= html_element_id(:console_display) %>"></div>
+    <input type="text" id="<%= html_element_id(:console_input) %>" class="<%= html_element_id(:console_input_singleline) %>" />
+    <textarea id="<%= html_element_id(:console_textarea) %>" class="<%= html_element_id(:console_input_multiline) %>"></textarea>
+    <div class="<%= html_element_id(:button) %> <%= html_element_id(:long_button) %>" id="<%= html_element_id(:run_button) %>">run</div>
+    <div class="<%= html_element_id(:button) %> <%= html_element_id(:long_button) %>" id="<%= html_element_id(:input_switch_button) %>">&gt;</div>
     <div style="clear:both;"></div>
+    <div class="<%= html_element_id(:top_nav) %>">
+      <div class="<%= html_element_id(:button) %>" id="<%= html_element_id(:minimize_button) %>">_</div>
+      <div class="<%= html_element_id(:button) %>" id="<%= html_element_id(:close_button) %>">X</div>
+      <div style="clear:both;"></div>
+    </div>
   </div>
+  <div class="<%= html_element_id(:left_aligned) %>">
+    <div id="<%= html_element_id(:debugger_display) %>">
+      debugger
+    </div>
+    <input type="text" id="<%= html_element_id(:debugger_input) %>" class="<%= html_element_id(:console_input_singleline) %>" />
+  </div>
+  <div style="clear:both;"><!-- zZz --></div>
 </div>
 <div id="<%= html_element_id(:spacer) %>"><!-- zZz --></div>
